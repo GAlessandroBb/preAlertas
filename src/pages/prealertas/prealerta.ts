@@ -1,36 +1,40 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { BasePage } from '../base/BasePage';
+import { expect, Locator, Page } from '@playwright/test'
+import { BasePage } from '../base/BasePage'
 
 export class PreAlerta extends BasePage {
-private readonly prealertasUrl = '/prealertas';
+  private readonly prealertasUrl = '/prealertas'
 
-readonly btnCrear: Locator;
-readonly successAlert: Locator;
+  private readonly btnCrear: Locator
+  private readonly successAlert: Locator
+  private readonly preAlertaOption: Locator
 
-constructor(page: Page) {
-super(page);
+  constructor(page: Page) {
+    super(page)
 
-this.btnCrear = page.getByRole('link', { name: /crear/i });
-this.successAlert = page.getByRole('alert');
-}
+    this.btnCrear = page.getByRole('link', { name: /crear/i })
+    this.successAlert = page.getByRole('alert')
+    this.preAlertaOption = this.page.locator('a:has-text("Prealerta tu compra")')
+  }
 
-async navigate(): Promise<void> {
-await this.navigateTo(this.prealertasUrl);
-await this.waitForLoaded();
-}
+  async goToPreAlertaOption(): Promise<void> {
+    await this.preAlertaOption.click()
+  }
 
-async waitForLoaded(): Promise<void> {
-await expect(this.btnCrear).toBeVisible();
-await expect(this.btnCrear).toBeEnabled();
-}
+  async navigate(): Promise<void> {
+    await this.navigateTo(this.prealertasUrl)
+    await this.waitForLoaded()
+  }
 
-async clickCrear(): Promise<void> {
-await this.btnCrear.click();
-}
+  async waitForLoaded(): Promise<void> {
+    await expect(this.btnCrear).toBeVisible()
+    await expect(this.btnCrear).toBeEnabled()
+  }
 
-async expectPrealertaCreada(): Promise<void> {
-await expect(this.successAlert).toHaveText(
-    /prealerta creada satisfactoriamente/i
-);
-}
+  async clickCrear(): Promise<void> {
+    await this.btnCrear.click()
+  }
+
+  async expectPrealertaCreada(): Promise<void> {
+    await expect(this.successAlert).toHaveText(/prealerta creada satisfactoriamente/i)
+  }
 }
