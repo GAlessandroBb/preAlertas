@@ -1,0 +1,28 @@
+{
+  "loginPassword": {
+    "missingUsername": "The username field is required when grant type is password.",
+    "missingPassword": "The password field is required when grant type is password.",
+    "missingGrantType": "The grant type field is required.",
+    "invalidGrantType": "The client id field is required when grant type is client_credentials. (and 1 more error)",
+    "invalidBody": "The grant type field is required.",
+    "invalidD": "The selected grant type is invalid. (and 2 more errors)"
+
+  },
+  "loginClientCredentials": {
+    "missingClientId": "The client id field is required when grant type is client_credentials.",
+    "missingClientSecret": "The client secret field is required when grant type is client_credentials.",
+    "missingGrantType": "The grant type field is required.",
+    "invalidGrantType": "The username field is required when grant type is password. (and 1 more error)",
+    "invalidBody": "The grant type field is required.",
+    "invalidBodyType": "The selected grant type is invalid. (and 2 more errors)"
+  },
+  "refreshToken": {
+    "missingRefreshToken": "The refresh token field is required.",
+    "missingGrantType": "The grant type field is required.",
+    "invalidGrantType": "The selected grant type is invalid.",
+    "invalidBody": "The grant type field is required. (and 1 more error)",
+    "invalidBodyType": "The selected grant type is invalid. (and 1 more error)",
+    "invalidRefreshToken": "The refresh token is invalid."
+  }
+}
+
