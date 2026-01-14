@@ -7,3 +7,6 @@ node_modules/
 /playwright/.cache/
 
 /generated/prisma
+
+.DS_Store
+dist/
