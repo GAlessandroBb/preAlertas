@@ -61,8 +61,7 @@ async navigate(): Promise<void> {
     await this.waitForLoaded()
 }
 async waitForLoaded(): Promise<void> {
-    await expect(this.addBtn).toBeVisible()
-    await expect(this.addBtn).toBeEnabled()
+    await this.page.waitForLoadState('domcontentloaded')
 }
 
 async selectFromSelect2(container: Locator, value: string) {

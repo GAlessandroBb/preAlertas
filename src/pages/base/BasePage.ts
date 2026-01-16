@@ -3,6 +3,7 @@ import { environment } from '../../config/environment'
 
 type WaitOptions = Parameters<Locator['waitFor']>[0]
 
+
 export abstract class BasePage {
   protected readonly page: Page
   protected readonly baseUrl: string
