@@ -60,7 +60,7 @@ export const environment: EnvironmentConfig = {
   olvaMiami: process.env.BASE_URL_OLVAMIAMI || 'http://localhost:3000',
 
   test: {
-    headless: false,
+    headless: parseBoolean(process.env.HEADLESS, false),
     browser: process.env.BROWSER || 'chromium',
     timeout: parseNumber(process.env.TIMEOUT, 30000),
     retries: parseNumber(process.env.RETRIES, 2),

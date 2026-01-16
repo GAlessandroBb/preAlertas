@@ -1,5 +1,5 @@
-import { defineConfig, devices } from '@playwright/test';
-import { environment } from './src/config/environment';
+import { defineConfig, devices } from '@playwright/test'
+import { environment } from './src/config/environment'
 
 /**
  * Read environment variables from file.
@@ -27,12 +27,13 @@ export default defineConfig({
     ['html', { outputFolder: 'playwright-report' }],
     ['json', { outputFile: 'test-results/results.json' }],
     ['junit', { outputFile: 'test-results/junit.xml' }],
-    ['list'],
+    ['list']
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
+    headless: environment.test.headless,
     baseURL: environment.baseUrl, // solo para pruebas web
     actionTimeout: environment.test.timeout,
     navigationTimeout: environment.test.timeout,
@@ -43,15 +44,15 @@ export default defineConfig({
     userAgent: 'Playwright-ShippingPlatform-Automation',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: 'on-first-retry'
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+      use: { ...devices['Desktop Chrome'] }
+    }
 
     // {
     //   name: 'firefox',
@@ -94,7 +95,7 @@ export default defineConfig({
   globalTeardown: './tests/setup/global-teardown',
   timeout: 60000,
   expect: {
-    timeout: 10000,
+    timeout: 10000
   },
   outputDir: 'test-results/',
   preserveOutput: 'failures-only',
@@ -102,6 +103,6 @@ export default defineConfig({
   metadata: {
     'test-environment': environment.environment,
     'base-url': environment.baseUrl,
-    'browser': environment.test.browser,
+    browser: environment.test.browser
   }
-});
+})
