@@ -6,7 +6,6 @@
     "invalidGrantType": "The client id field is required when grant type is client_credentials. (and 1 more error)",
     "invalidBody": "The grant type field is required.",
     "invalidD": "The selected grant type is invalid. (and 2 more errors)"
-
   },
   "loginClientCredentials": {
     "missingClientId": "The client id field is required when grant type is client_credentials.",
@@ -25,4 +24,3 @@
     "invalidRefreshToken": "The refresh token is invalid."
   }
 }
-

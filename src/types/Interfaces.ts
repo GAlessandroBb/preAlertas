@@ -1,5 +1,5 @@
-export interface NewWrData{
-  tracking: string;
+export interface NewWrData {
+  tracking: string
   consignee: string
   shipper: string
   carrier: string
@@ -15,7 +15,7 @@ export interface NewWrData{
   paquetes: Paquetes
 }
 
-export interface Paquetes{
+export interface Paquetes {
   cantidad: string
   tipo: string
   peso: string

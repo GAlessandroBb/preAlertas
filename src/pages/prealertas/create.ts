@@ -1,6 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test'
-import { BasePage } from '../base/BasePage'
 import path from 'path'
+import { BasePage } from '../base/BasePage'
 
 export class Create extends BasePage {
   private readonly createUrl = '/prealertas/create'
@@ -30,18 +30,8 @@ export class Create extends BasePage {
     await expect(this.btnGuardar).toBeVisible()
   }
 
-  async createPrealerta(data: {
-    tienda: string
-    rastreo: string
-    contenido: string
-    precio: string
-    instrucciones: string
-  }): Promise<void> {
-
-    const pdfPath = path.resolve(
-      __dirname,
-      '../../testData/comprobantes/comprobante.pdf'
-    )
+  async createPrealerta(data: { tienda: string; rastreo: string; contenido: string; precio: string; instrucciones: string }): Promise<void> {
+    const pdfPath = path.resolve(__dirname, '../../testData/comprobantes/comprobante.pdf')
 
     await this.comprobante.setInputFiles(pdfPath)
 

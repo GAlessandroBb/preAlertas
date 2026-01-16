@@ -3,7 +3,6 @@ import { environment } from '../../config/environment'
 
 type WaitOptions = Parameters<Locator['waitFor']>[0]
 
-
 export abstract class BasePage {
   protected readonly page: Page
   protected readonly baseUrl: string
@@ -15,24 +14,20 @@ export abstract class BasePage {
     this.olvamiami = environment.olvaMiami
   }
 
-
   /**
    * Navega a una ruta relativa o URL absoluta.
    * - Si le pasas "/shipment-record/step/1" usa baseUrl + path
    * - Si le pasas "https://..." navega directo
    */
-  public async navigateTo(
-  url: string,
-  base: 'default' | 'olvamiami' = 'default'
-): Promise<void> {
-  const root = base === 'olvamiami' ? this.olvamiami : this.baseUrl
-  const fullUrl = url.startsWith('http') ? url : `${root}${url}`
+  public async navigateTo(url: string, base: 'default' | 'olvamiami' = 'default'): Promise<void> {
+    const root = base === 'olvamiami' ? this.olvamiami : this.baseUrl
+    const fullUrl = url.startsWith('http') ? url : `${root}${url}`
 
-  await this.page.goto(fullUrl, {
-    waitUntil: 'domcontentloaded',
-    timeout: environment.test.timeout
-  })
-}
+    await this.page.goto(fullUrl, {
+      waitUntil: 'domcontentloaded',
+      timeout: environment.test.timeout
+    })
+  }
 
   /**
    * Espera genérica para apps SPA.
