@@ -13,6 +13,7 @@ export interface EnvironmentConfig {
 
   // Application URLs
   baseUrl: string
+  olvaMiami: string
 
   // Test configuration
   test: {
@@ -56,9 +57,10 @@ export const environment: EnvironmentConfig = {
   nodeEnv: process.env.NODE_ENV || 'development',
 
   baseUrl: process.env.BASE_URL_CLIENTE_OLVABOX || 'http://localhost:3000',
+  olvaMiami: process.env.BASE_URL_OLVAMIAMI || 'http://localhost:3000',
 
   test: {
-    headless: parseBoolean(process.env.HEADLESS, true),
+    headless: false,
     browser: process.env.BROWSER || 'chromium',
     timeout: parseNumber(process.env.TIMEOUT, 30000),
     retries: parseNumber(process.env.RETRIES, 2),

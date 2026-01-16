@@ -1,5 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test'
 import { BasePage } from '../base/BasePage'
+import path from 'path'
 
 export class Create extends BasePage {
   private readonly createUrl = '/prealertas/create'
@@ -10,6 +11,7 @@ export class Create extends BasePage {
   readonly precioInput: Locator
   readonly instruccionesInput: Locator
   readonly btnGuardar: Locator
+  readonly comprobante: Locator
 
   constructor(page: Page) {
     super(page)
@@ -19,6 +21,7 @@ export class Create extends BasePage {
     this.contenidoInput = page.locator('#articulo')
     this.precioInput = page.locator('#precio')
     this.instruccionesInput = page.locator('#instructions')
+    this.comprobante = page.locator('#archivo')
     this.btnGuardar = page.getByRole('button', { name: 'Guardar' })
   }
 
@@ -27,7 +30,21 @@ export class Create extends BasePage {
     await expect(this.btnGuardar).toBeVisible()
   }
 
-  async createPrealerta(data: { tienda: string; rastreo: string; contenido: string; precio: string; instrucciones: string }): Promise<void> {
+  async createPrealerta(data: {
+    tienda: string
+    rastreo: string
+    contenido: string
+    precio: string
+    instrucciones: string
+  }): Promise<void> {
+
+    const pdfPath = path.resolve(
+      __dirname,
+      '../../testData/comprobantes/comprobante.pdf'
+    )
+
+    await this.comprobante.setInputFiles(pdfPath)
+
     await this.tiendaInput.fill(data.tienda)
     await this.rastreoInput.fill(data.rastreo)
     await this.contenidoInput.fill(data.contenido)
@@ -40,5 +57,3 @@ export class Create extends BasePage {
     await this.btnGuardar.click()
   }
 }
-
-// de algunas manera ver que en la pagina de prealertas se muestre el mensaje de 'prealerta creada correctamente'
