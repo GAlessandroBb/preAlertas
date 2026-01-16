@@ -3,8 +3,6 @@ import { BasePage } from '../base/BasePage'
 import { NewWrData } from '../../types/Interfaces'
 
 export class CreateWr extends BasePage {
-private readonly createWrUrl = 'jc2_addWH1_2019.php'
-
 readonly inputTracking: Locator
 readonly consignee: Locator
 readonly listShipper: Locator
@@ -59,7 +57,7 @@ this.crearBtn = page.locator('#btnCrearWR')
 }
 
 async navigate(): Promise<void> {
-    await this.navigateTo('jc2_addWH1_2019.php', 'olvamiami')
+    await this.navigateTo('/jc2_addWH1_2019.php', 'olvamiami')
     await this.waitForLoaded()
 }
 async waitForLoaded(): Promise<void> {

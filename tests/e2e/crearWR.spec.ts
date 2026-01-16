@@ -19,22 +19,27 @@ await loginPage.navigate()
 await loginPage.waitForLoaded()
 await loginPage.login('gerardoa', 'arceg.3892')
 
+
 const bienvenidaPage = new Bienvenida(page)
-await bienvenidaPage.navigate()
 await bienvenidaPage.waitForLoaded()
 await bienvenidaPage.clickVersionPc()
 
+
 const home = new Dashboard(page)
-await home.navigate()
+// await home.navigate()
 await home.waitForLoaded()
+await home.abrirMenuWarehouse()
 await home.clickAddWr()
+
 
 const adding = new wareHouse(page)
 await adding.waitForLoaded()
 await adding.clickBtnAddWr()
 
+
 const createWr = new CreateWr(page)
 await createWr.waitForLoaded()
+
 
 const wrData = {
     tracking: 'TRK123456',

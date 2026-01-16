@@ -2,8 +2,6 @@ import { expect, Locator, Page } from '@playwright/test'
 import { BasePage } from '../base/BasePage'
 
 export class wareHouse extends BasePage {
-private readonly addWrUrl = 'jc_new_wh.php'
-
 private readonly btnAddWr: Locator
 
 constructor(page: Page) {
@@ -13,7 +11,7 @@ this.btnAddWr = page.getByRole('link', { name: 'New WR' });
 }
 
 async navigate(): Promise<void> {
-await this.navigateTo('jc_new_wh.php', 'olvamiami')
+await this.navigateTo('/jc_new_wh.php', 'olvamiami')
 await this.waitForLoaded()
 }
 

@@ -2,8 +2,6 @@ import { expect, Locator, Page } from '@playwright/test'
 import { BasePage } from '../base/BasePage'
 
 export class Bienvenida extends BasePage {
-private readonly bienvenidaMl = 'bienvenida.php'
-
 private readonly btnPc: Locator
 
 constructor(page: Page) {
@@ -18,7 +16,8 @@ await this.waitForLoaded()
 }
 
 async waitForLoaded(): Promise<void> {
-await expect(this.btnPc).toBeVisible()
+await this.page.waitForLoadState('domcontentloaded')
+
 }
 
 async clickVersionPc(): Promise<void> {
