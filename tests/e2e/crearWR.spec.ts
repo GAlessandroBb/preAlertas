@@ -17,7 +17,7 @@ test.describe('Crear WareHouseReceipt', () => {
   // await loginPage.waitForLoaded()
   // await loginPage.login('gerardoa', 'arceg.3892') })
 
-  test('Crear 1 WareHouse Receipt', async ({ page, context }) => {
+test('Crear 1 WareHouse Receipt', async ({ page, context }) => {
     // Otorgar permisos de cámara ANTES de navegar
     await context.grantPermissions(['camera'], { origin: 'https://olvamiami.sistemaml.net' })
 
@@ -52,31 +52,27 @@ test.describe('Crear WareHouseReceipt', () => {
     await createWr.waitForLoaded()
 
     const wrData = {
-      tracking: 'TRK123456',
-      instrucciones: 'Manejar con cuidado',
-      invoice: 'INV-001',
-      wrExterno: 'EXT-001',
-      notaAdm: 'Nota administrativa',
-      notaGen: 'Nota general',
-      fob: '150',
-      baterias: '0',
-      prohibido: false,
-      verificado: true,
-      shipper: 'AMAZON',
-      carrier: 'DHL',
-      consignee: 'gabriel benites',
-      paquetes: {
-        cantidad: '1',
-        tipo: 'BOX',
-        peso: '10',
-        altura: '20',
-        ancho: '30',
-        largo: '40',
-        descripcion: 'Electrónicos'
-      }
+    tracking: 'TRK123443',
+    consignee: 'gabriel',
+    shipper: 'Amazon',
+    carrier: 'DHL',
+    baterias: '0',
+    invoice: 'INV-100',
+    wrExterno: 'EXT-100',
+    notaAdm: 'Nota administrativa',
+    notaGen: 'Nota general',
+    paquetes: {
+    cantidad: '1',
+    tipo: 'BOX',
+    peso: '10',
+    altura: '20',
+    ancho: '30',
+    largo: '40',
+    descripcion: 'Electrónicos'
     }
+}
 
-    await createWr.crearWtr(wrData)
-    await createWr.selectConsignee(wrData.consignee)
-  })
+await createWr.crearWtr(wrData)
+await createWr.selectConsignee(wrData.consignee)
+})
 })

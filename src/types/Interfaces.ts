@@ -3,13 +3,9 @@ export interface NewWrData {
   consignee: string
   shipper: string
   carrier: string
-  prohibido: boolean
   baterias: string
-  verificado: boolean
-  fob: string
   invoice: string
   wrExterno: string
-  instrucciones: string
   notaAdm: string
   notaGen: string
   paquetes: Paquetes
