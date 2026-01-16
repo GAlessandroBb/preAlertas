@@ -42,6 +42,14 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
     viewport: { width: 1280, height: 720 },
     userAgent: 'Playwright-ShippingPlatform-Automation',
+    // permissions: ['camera'],
+    permissions: ['camera'],
+    launchOptions: {
+      args: [
+        '--use-fake-ui-for-media-stream', // Evita popups extra de UI
+        '--use-fake-device-for-media-stream' // Inyecta un video de prueba (círculo verde dando vueltas)
+      ]
+    },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry'
