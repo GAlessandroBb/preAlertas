@@ -59,7 +59,7 @@ this.crearBtn = page.locator('#btnCrearWR')
 }
 
 async navigate(): Promise<void> {
-    await this.navigateTo(this.createWrUrl)
+    await this.navigateTo('jc2_addWH1_2019.php', 'olvamiami')
     await this.waitForLoaded()
 }
 async waitForLoaded(): Promise<void> {

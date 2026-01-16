@@ -15,7 +15,7 @@ this.addWr = page.getByRole('link', { name: 'Add WR' });
 }
 
 async navigate(): Promise<void> {
-await this.navigateTo(this.homeMl)
+await this.navigateTo('jc_home.php', 'olvamiami')
 await this.waitForLoaded()
 }
 

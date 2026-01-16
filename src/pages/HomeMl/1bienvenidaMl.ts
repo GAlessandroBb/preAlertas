@@ -13,7 +13,7 @@ this.btnPc = page.getByRole('link', { name: 'Versión PC' })
 }
 
 async navigate(): Promise<void> {
-await this.navigateTo(this.bienvenidaMl)
+await this.navigateTo('/bienvenida.php', 'olvamiami')
 await this.waitForLoaded()
 }
 

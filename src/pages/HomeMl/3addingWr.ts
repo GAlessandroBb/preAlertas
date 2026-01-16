@@ -13,7 +13,7 @@ this.btnAddWr = page.getByRole('link', { name: 'New WR' });
 }
 
 async navigate(): Promise<void> {
-await this.navigateTo(this.addWrUrl)
+await this.navigateTo('jc_new_wh.php', 'olvamiami')
 await this.waitForLoaded()
 }
 
