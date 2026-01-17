@@ -61,15 +61,13 @@ test('Crear 1 WareHouse Receipt', async ({ page, context }) => {
     wrExterno: 'EXT-100',
     notaAdm: 'Nota administrativa',
     notaGen: 'Nota general',
-    paquetes: {
-    cantidad: '1',
-    tipo: 'BOX',
+    cantidad: '4',
+    tipo: 'Box',
     peso: '10',
     altura: '20',
     ancho: '30',
     largo: '40',
     descripcion: 'Electrónicos'
-    }
 }
 
 await createWr.crearWtr(wrData)

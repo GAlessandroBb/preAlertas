@@ -65,22 +65,17 @@ await this.inputTracking.waitFor({ state: 'visible', timeout: 60000 })
 
 
 async selectFromSelect2(container: Locator, value: string) {
-// 1. Abrir el Select2
-await container.click()
+    await container.click()
 
-// 2. Input interno de búsqueda de Select2
-const searchInput = this.page.locator('.select2-search__field')
-await expect(searchInput).toBeVisible()
+    const searchInput = this.page.locator('.select2-search__field')
+    await expect(searchInput).toBeVisible()
 
-// 3. Escribir lo que buscas
-await searchInput.fill(value)
+    await searchInput.fill(value)
 
-// 4. Esperar y seleccionar la opción
-const option = this.page.locator('.select2-results__option', {
-hasText: value}).first()
+    const option = this.page.locator('.select2-results__option', {
+    hasText: value}).first()
 
-// await expect(option).toBeVisible()
-await option.click()
+    await option.click()
 }
 
 
@@ -93,21 +88,18 @@ await this.inputNotaAdm.fill(data.notaAdm)
 await this.inputNotaGen.fill(data.notaGen)
 await this.inputBaterias.fill(String(data.baterias))
 
-
 await this.selectFromSelect2(this.listShipper, data.shipper)
 await this.selectFromSelect2(this.listCarrier, data.carrier)
-await this.selectFromSelect2(this.listTipo, data.paquetes.tipo)
 
 await this.selectConsignee(data.consignee)
 
-const p = data.paquetes
-await this.inputCantidad.fill(String(p.cantidad))
-await this.listTipo.selectOption(p.tipo)
-await this.inputPeso.fill(String(p.peso))
-await this.inputAltura.fill(String(p.altura))
-await this.inputAncho.fill(String(p.ancho))
-await this.inputLargo.fill(String(p.largo))
-await this.inputDescripcion.fill(p.descripcion)
+await this.inputCantidad.fill(String(data.cantidad))
+await this.listTipo.selectOption({ label: data.tipo })
+await this.inputPeso.fill(String(data.peso))
+await this.inputAltura.fill(String(data.altura))
+await this.inputAncho.fill(String(data.ancho))
+await this.inputLargo.fill(String(data.largo))
+await this.inputDescripcion.fill(data.descripcion)
 
 await this.addBtn.click()
 await this.crearBtn.click()
@@ -127,13 +119,13 @@ if (count === 0) {
     throw new Error(`No se encontró ningún consignee con el nombre ${name}`)
 }
 
-for (let i = 0; i < count; i++) {
-    const rowText = await rows.nth(i).innerText()
-    if (rowText.includes(name)) {
-    await rows.nth(i).click()
-    break
-    }
-}
+const firstCheckmark = modal
+    .locator('span.checkmark')
+    .first()
+
+    await expect(firstCheckmark).toBeVisible()
+    await firstCheckmark.click()
+    
 await expect(modal).toBeHidden()
 }
 }

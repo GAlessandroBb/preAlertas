@@ -8,10 +8,6 @@ export interface NewWrData {
   wrExterno: string
   notaAdm: string
   notaGen: string
-  paquetes: Paquetes
-}
-
-export interface Paquetes {
   cantidad: string
   tipo: string
   peso: string
