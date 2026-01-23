@@ -20,10 +20,7 @@ export abstract class BasePage {
   /**
    * Navega a una ruta relativa o URL absoluta
    */
-  public async navigateTo(
-    url: string,
-    base: BaseRoot = 'default'
-  ): Promise<void> {
+  public async navigateTo(url: string, base: BaseRoot = 'default'): Promise<void> {
     const root = this.roots[base]
     const fullUrl = url.startsWith('http') ? url : `${root}${url}`
 
@@ -49,12 +46,8 @@ export abstract class BasePage {
   /**
    * Espera un elemento (selector o locator)
    */
-  public async waitForElement(
-    locator: string | Locator,
-    options?: WaitOptions
-  ): Promise<Locator> {
-    const element =
-      typeof locator === 'string' ? this.page.locator(locator) : locator
+  public async waitForElement(locator: string | Locator, options?: WaitOptions): Promise<Locator> {
+    const element = typeof locator === 'string' ? this.page.locator(locator) : locator
 
     await element.waitFor({
       state: options?.state || 'visible',
@@ -106,27 +99,15 @@ export abstract class BasePage {
     await expect(locator, message).toBeDisabled()
   }
 
-  public async assertElementContainsText(
-    locator: Locator,
-    expectedText: string,
-    message?: string
-  ): Promise<void> {
+  public async assertElementContainsText(locator: Locator, expectedText: string, message?: string): Promise<void> {
     await expect(locator, message).toContainText(expectedText)
   }
 
-  public async assertElementHasText(
-    locator: Locator,
-    expectedText: string,
-    message?: string
-  ): Promise<void> {
+  public async assertElementHasText(locator: Locator, expectedText: string, message?: string): Promise<void> {
     await expect(locator, message).toHaveText(expectedText)
   }
 
-  public async assertElementHasValue(
-    locator: Locator,
-    expectedValue: string,
-    message?: string
-  ): Promise<void> {
+  public async assertElementHasValue(locator: Locator, expectedValue: string, message?: string): Promise<void> {
     await expect(locator, message).toHaveValue(expectedValue)
   }
 
@@ -134,10 +115,7 @@ export abstract class BasePage {
    * URL helpers
    */
   public async waitForUrlToContain(text: string, timeout?: number): Promise<void> {
-    await this.page.waitForURL(
-      url => url.toString().includes(text),
-      { timeout: timeout || environment.test.timeout }
-    )
+    await this.page.waitForURL((url) => url.toString().includes(text), { timeout: timeout || environment.test.timeout })
   }
 
   public async assertUrlContains(text: string, message?: string): Promise<void> {

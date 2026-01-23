@@ -30,20 +30,20 @@ export class Create extends BasePage {
     await expect(this.btnGuardar).toBeVisible()
   }
 
-  async createPrealerta(data: {tienda: string; contenido: string; precio: string; instrucciones: string}): Promise<string> {
-      const tracking = `${Date.now()}`
-      const pdfPath = path.resolve(__dirname, '../../../testData/comprobantes/comprobante.pdf')
+  async createPrealerta(data: { tienda: string; contenido: string; precio: string; instrucciones: string }): Promise<string> {
+    const tracking = `${Date.now()}`
+    const pdfPath = path.resolve(__dirname, '../../../testData/comprobantes/comprobante.pdf')
 
-      await this.comprobante.setInputFiles(pdfPath)
+    await this.comprobante.setInputFiles(pdfPath)
 
-      await this.tiendaInput.fill(data.tienda)
-      await this.rastreoInput.fill(tracking)
-      await this.contenidoInput.fill(data.contenido)
-      await this.precioInput.fill(data.precio)
-      await this.instruccionesInput.fill(data.instrucciones)
+    await this.tiendaInput.fill(data.tienda)
+    await this.rastreoInput.fill(tracking)
+    await this.contenidoInput.fill(data.contenido)
+    await this.precioInput.fill(data.precio)
+    await this.instruccionesInput.fill(data.instrucciones)
 
-      return tracking
-    }
+    return tracking
+  }
 
   async guardar(): Promise<void> {
     await expect(this.btnGuardar).toBeEnabled()

@@ -4,72 +4,67 @@ import { expect, Locator, Page } from '@playwright/test'
 import { BasePage } from '../base/BasePage'
 
 export class Release extends BasePage {
-    private readonly releaseUrl = '/jc2_SS_Operativos.php'
-    readonly page: Page
-    private readonly releaseShBtn: Locator
-    private readonly agregarOperativoBtn: Locator
-    private readonly modalOperativo: Locator
-    private readonly siBtn: Locator
+  private readonly releaseUrl = '/jc2_SS_Operativos.php'
+  readonly page: Page
+  private readonly releaseShBtn: Locator
+  private readonly agregarOperativoBtn: Locator
+  private readonly modalOperativo: Locator
+  private readonly siBtn: Locator
 
-    constructor(page: Page) {
-        super(page)
-        this.page = page
-        this.releaseShBtn = page.locator('ul.submenu li a:text("SH Verification")')
-        this.agregarOperativoBtn = page.locator('.btn-group')
-        this.modalOperativo = page.locator('.modal-content')
-        this.siBtn = page.locator('.btn.btn-primary')
+  constructor(page: Page) {
+    super(page)
+    this.page = page
+    this.releaseShBtn = page.locator('ul.submenu li a:text("SH Verification")')
+    this.agregarOperativoBtn = page.locator('.btn-group')
+    this.modalOperativo = page.locator('.modal-content')
+    this.siBtn = page.locator('.btn.btn-primary')
+  }
+
+  async release(): Promise<void> {
+    await this.releaseShBtn.click()
+  }
+
+  async waitForLoaded(): Promise<void> {
+    await this.page.waitForLoadState('domcontentloaded')
+  }
+
+  async agregarOperativo(): Promise<void> {
+    await this.agregarOperativoBtn.click()
+    await expect(this.modalOperativo).toBeVisible()
+    await this.siBtn.click()
+  }
+
+  async clickAddShIfFirstRowIsOpen(): Promise<void> {
+    const firstRow = this.page.locator('tbody tr').first()
+
+    await expect(firstRow).toBeVisible()
+
+    const status = await firstRow.locator('td:nth-child(2)').innerText()
+
+    if (status.trim() === 'OPEN') {
+      const addShBtn = firstRow.locator('.btnEditar')
+      await expect(addShBtn).toBeVisible()
+      await addShBtn.click()
     }
+  }
 
-    
-    async release(): Promise<void> {
-        await this.releaseShBtn.click()
-    }
+  async agregarShAlVuelo(idSh: string): Promise<void> {
+    const searchInput = this.page.locator('#myTable_filter input[type="search"]')
 
-    async waitForLoaded(): Promise<void> {
-        await this.page.waitForLoadState('domcontentloaded')
-    }
+    await expect(searchInput).toBeVisible()
+    await searchInput.fill(idSh)
 
-    async agregarOperativo(): Promise<void> {
-        await this.agregarOperativoBtn.click()
-        await expect(this.modalOperativo).toBeVisible()
-        await this.siBtn.click()
-    }
+    const firstRow = this.page.locator('#myTable tbody tr').first()
+    await expect(firstRow).toBeVisible()
 
+    const checkbox = firstRow.locator('input.idSHCheck')
 
+    await expect(checkbox).toBeVisible()
+    await checkbox.check()
 
-    async clickAddShIfFirstRowIsOpen(): Promise<void> {
-        const firstRow = this.page.locator('tbody tr').first()
+    const agregarVueloBtn = this.page.locator('#btnSolicitar')
 
-        await expect(firstRow).toBeVisible()
-
-        const status = await firstRow.locator('td:nth-child(2)').innerText()
-
-        if (status.trim() === 'OPEN') {
-            const addShBtn = firstRow.locator('.btnEditar')
-            await expect(addShBtn).toBeVisible()
-            await addShBtn.click()
-        }
-    }
-
-
-    async agregarShAlVuelo(idSh: string): Promise<void> {
-        const searchInput = this.page.locator('#myTable_filter input[type="search"]')
-
-        await expect(searchInput).toBeVisible()
-        await searchInput.fill(idSh)
-
-        const firstRow = this.page.locator('#myTable tbody tr').first()
-        await expect(firstRow).toBeVisible()
-
-        const checkbox = firstRow.locator('input.idSHCheck')
-
-        await expect(checkbox).toBeVisible()
-        await checkbox.check()
-
-        const agregarVueloBtn = this.page.locator('#btnSolicitar')
-
-        await expect(agregarVueloBtn).toBeEnabled()
-        await agregarVueloBtn.click()
-    }
-
+    await expect(agregarVueloBtn).toBeEnabled()
+    await agregarVueloBtn.click()
+  }
 }

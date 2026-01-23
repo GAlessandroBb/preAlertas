@@ -1,44 +1,44 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test'
 
 test('test', async ({ page }) => {
-  const page1Promise = page.waitForEvent('popup');
-  await page.getByRole('link', { name: 'New WR' }).click();
-  const page1 = await page1Promise;
-  await page1.locator('#tracking').click();
-  await page1.locator('#tracking').click();
-  await page1.locator('#tracking').fill('867543526754635');
-  await page1.locator('#searchConsignee').click();
-  await page1.locator('#searchConsignee').fill('gabr');
-  await page1.getByTitle('Buscar Consignee').click();
-  await page1.getByRole('cell', { name: 'OLV0000079 - GABRIEL' }).click();
-  await page1.getByRole('cell', { name: 'OLV0000079 - GABRIEL' }).click();
-  await page1.locator('div').filter({ hasText: 'OLV0000079 - GABRIEL' }).nth(3).click();
-  await page1.locator('.checkmark').first().click();
-  await page1.locator('#select2-shipper_id-container').click();
-  await page1.getByRole('treeitem', { name: '2 - Ebay' }).click();
-  await page1.locator('div').filter({ hasText: 'Carrier: :: Seleccione :: 29' }).nth(4).click();
-  await page1.getByRole('textbox', { name: ':: Seleccione ::' }).click();
-  await page1.getByRole('textbox', { name: ':: Seleccione ::' }).click();
-  await page1.getByRole('treeitem', { name: '- Averitt' }).click();
-  await page1.getByRole('textbox', { name: 'Invoice Number:' }).click();
-  await page1.getByRole('textbox', { name: 'Invoice Number:' }).fill('987654467685');
-  await page1.getByRole('textbox', { name: 'WR Externo:' }).click();
-  await page1.getByRole('textbox', { name: 'WR Externo:' }).fill('87654234');
-  await page1.getByRole('textbox', { name: 'Nota Administrativa:' }).click();
-  await page1.getByRole('textbox', { name: 'Nota Administrativa:' }).fill('gfdsfgfwf');
-  await page1.getByRole('textbox', { name: 'Nota General:' }).click();
-  await page1.getByRole('textbox', { name: 'Nota Administrativa:' }).fill('gfdsfgfwfg');
-  await page1.getByRole('textbox', { name: 'Nota General:' }).fill('gfdgdffafds');
-  await page1.locator('#pqteType').selectOption('Box');
-  await page1.locator('#pqteLb').click();
-  await page1.locator('#pqteLb').fill('15');
-  await page1.locator('#pqteHeight').click();
-  await page1.locator('#pqteWidth').click();
-  await page1.locator('#pqteWidth').click();
-  await page1.locator('#pqteDescription').click();
-  await page1.locator('#pqteDescription').fill('gfdsdgsfd');
-  await page1.locator('#btnAddPqte').click();
-  await page1.getByRole('button', { name: ' Crear WR' }).click();
-  await page1.goto('https://olvamiami.sistemaml.net/jc2_addWH1_2019fin.php?id=243');
-  await page1.getByText('WR000243 Creado con Éxito!!').click();
-});
+  const page1Promise = page.waitForEvent('popup')
+  await page.getByRole('link', { name: 'New WR' }).click()
+  const page1 = await page1Promise
+  await page1.locator('#tracking').click()
+  await page1.locator('#tracking').click()
+  await page1.locator('#tracking').fill('867543526754635')
+  await page1.locator('#searchConsignee').click()
+  await page1.locator('#searchConsignee').fill('gabr')
+  await page1.getByTitle('Buscar Consignee').click()
+  await page1.getByRole('cell', { name: 'OLV0000079 - GABRIEL' }).click()
+  await page1.getByRole('cell', { name: 'OLV0000079 - GABRIEL' }).click()
+  await page1.locator('div').filter({ hasText: 'OLV0000079 - GABRIEL' }).nth(3).click()
+  await page1.locator('.checkmark').first().click()
+  await page1.locator('#select2-shipper_id-container').click()
+  await page1.getByRole('treeitem', { name: '2 - Ebay' }).click()
+  await page1.locator('div').filter({ hasText: 'Carrier: :: Seleccione :: 29' }).nth(4).click()
+  await page1.getByRole('textbox', { name: ':: Seleccione ::' }).click()
+  await page1.getByRole('textbox', { name: ':: Seleccione ::' }).click()
+  await page1.getByRole('treeitem', { name: '- Averitt' }).click()
+  await page1.getByRole('textbox', { name: 'Invoice Number:' }).click()
+  await page1.getByRole('textbox', { name: 'Invoice Number:' }).fill('987654467685')
+  await page1.getByRole('textbox', { name: 'WR Externo:' }).click()
+  await page1.getByRole('textbox', { name: 'WR Externo:' }).fill('87654234')
+  await page1.getByRole('textbox', { name: 'Nota Administrativa:' }).click()
+  await page1.getByRole('textbox', { name: 'Nota Administrativa:' }).fill('gfdsfgfwf')
+  await page1.getByRole('textbox', { name: 'Nota General:' }).click()
+  await page1.getByRole('textbox', { name: 'Nota Administrativa:' }).fill('gfdsfgfwfg')
+  await page1.getByRole('textbox', { name: 'Nota General:' }).fill('gfdgdffafds')
+  await page1.locator('#pqteType').selectOption('Box')
+  await page1.locator('#pqteLb').click()
+  await page1.locator('#pqteLb').fill('15')
+  await page1.locator('#pqteHeight').click()
+  await page1.locator('#pqteWidth').click()
+  await page1.locator('#pqteWidth').click()
+  await page1.locator('#pqteDescription').click()
+  await page1.locator('#pqteDescription').fill('gfdsdgsfd')
+  await page1.locator('#btnAddPqte').click()
+  await page1.getByRole('button', { name: ' Crear WR' }).click()
+  await page1.goto('https://olvamiami.sistemaml.net/jc2_addWH1_2019fin.php?id=243')
+  await page1.getByText('WR000243 Creado con Éxito!!').click()
+})
