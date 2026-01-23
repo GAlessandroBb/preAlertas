@@ -32,24 +32,31 @@ export class SolicitudEnvio extends BasePage {
     // }
 
     async chooseWrByTracking(trackingObjetivo: string): Promise<void> {
-        const rows = this.page.locator('tbody tr')
-        const count = await rows.count()
+        // 1️⃣ Buscar por tracking (esto ya funciona)
+        const searchInput = this.page.locator('#wrTable_filter input[type="search"]')
+        await searchInput.fill(trackingObjetivo)
 
-        for (let i = 0; i < count; i++) {
-            const row = rows.nth(i)
+        // 2️⃣ Esperar a que DataTables filtre
+        await this.page.waitForTimeout(500)
 
-            const rowtracking = await row
-                .locator('td')
-                .nth(4) // columna del tracking
-                .innerText()
+        // 3️⃣ Click REAL desde el DOM (sin Playwright actions)
+        const clicked = await this.page.evaluate(() => {
+            const checkbox = document.querySelector(
+                '#wrTable tbody tr td input.pqtesMarcado'
+            ) as HTMLInputElement | null
 
-            if (rowtracking.trim() === trackingObjetivo) {
-                await row.locator('input.pqtesMarcado').check()
-                return
-            }
+            if (!checkbox) return false
+
+            checkbox.checked = true
+            checkbox.dispatchEvent(new Event('change', { bubbles: true }))
+            checkbox.click()
+
+            return true
+        })
+
+        if (!clicked) {
+            throw new Error('Checkbox no encontrado después de filtrar por tracking')
         }
-
-        throw new Error(`No se encontró ningún WR con tracking: ${trackingObjetivo}`)
     }
 
 
