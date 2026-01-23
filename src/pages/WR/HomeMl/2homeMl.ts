@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from '@playwright/test'
-import { BasePage } from '../base/BasePage'
+import { BasePage } from '../../base/BasePage'
 
-export class Dashboard extends BasePage {
+export class olvaBoxHomeWr extends BasePage {
   private readonly addWrOption: Locator
 
   constructor(page: Page) {

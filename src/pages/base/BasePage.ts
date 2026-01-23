@@ -2,25 +2,29 @@ import { expect, Locator, Page } from '@playwright/test'
 import { environment } from '../../config/environment'
 
 type WaitOptions = Parameters<Locator['waitFor']>[0]
+type BaseRoot = 'default' | 'olvamiami' | 'olvabox'
 
 export abstract class BasePage {
   protected readonly page: Page
-  protected readonly baseUrl: string
-  protected readonly olvamiami: string
+  protected readonly roots: Record<BaseRoot, string>
 
   constructor(page: Page) {
     this.page = page
-    this.baseUrl = environment.baseUrl
-    this.olvamiami = environment.olvaMiami
+    this.roots = {
+      default: environment.baseUrl,
+      olvamiami: environment.olvaMiami,
+      olvabox: environment.olvaBox
+    }
   }
 
   /**
-   * Navega a una ruta relativa o URL absoluta.
-   * - Si le pasas "/shipment-record/step/1" usa baseUrl + path
-   * - Si le pasas "https://..." navega directo
+   * Navega a una ruta relativa o URL absoluta
    */
-  public async navigateTo(url: string, base: 'default' | 'olvamiami' = 'default'): Promise<void> {
-    const root = base === 'olvamiami' ? this.olvamiami : this.baseUrl
+  public async navigateTo(
+    url: string,
+    base: BaseRoot = 'default'
+  ): Promise<void> {
+    const root = this.roots[base]
     const fullUrl = url.startsWith('http') ? url : `${root}${url}`
 
     await this.page.goto(fullUrl, {
@@ -30,23 +34,27 @@ export abstract class BasePage {
   }
 
   /**
-   * Espera genérica para apps SPA.
-   * Nota: networkidle puede ser inestable si hay polling; por eso es opcional.
+   * Espera genérica para apps SPA
    */
   public async waitForPageReady(options?: { useNetworkIdle?: boolean }): Promise<void> {
     await this.page.waitForLoadState('domcontentloaded')
 
     if (options?.useNetworkIdle) {
-      // Úsalo solo si en tu app realmente queda en idle
-      await this.page.waitForLoadState('networkidle', { timeout: environment.test.timeout })
+      await this.page.waitForLoadState('networkidle', {
+        timeout: environment.test.timeout
+      })
     }
   }
 
   /**
-   * Espera un elemento (locator o selector string) con timeout centralizado.
+   * Espera un elemento (selector o locator)
    */
-  public async waitForElement(locator: string | Locator, options?: WaitOptions): Promise<Locator> {
-    const element = typeof locator === 'string' ? this.page.locator(locator) : locator
+  public async waitForElement(
+    locator: string | Locator,
+    options?: WaitOptions
+  ): Promise<Locator> {
+    const element =
+      typeof locator === 'string' ? this.page.locator(locator) : locator
 
     await element.waitFor({
       state: options?.state || 'visible',
@@ -57,7 +65,7 @@ export abstract class BasePage {
   }
 
   /**
-   * Helpers básicos (acciones)
+   * Helpers de acciones
    */
   public async clickElement(locator: Locator): Promise<void> {
     await this.waitForElement(locator)
@@ -80,7 +88,7 @@ export abstract class BasePage {
   }
 
   /**
-   * Helpers de assertions
+   * Assertions
    */
   public async assertElementVisible(locator: Locator, message?: string): Promise<void> {
     await expect(locator, message).toBeVisible()
@@ -98,15 +106,27 @@ export abstract class BasePage {
     await expect(locator, message).toBeDisabled()
   }
 
-  public async assertElementContainsText(locator: Locator, expectedText: string, message?: string): Promise<void> {
+  public async assertElementContainsText(
+    locator: Locator,
+    expectedText: string,
+    message?: string
+  ): Promise<void> {
     await expect(locator, message).toContainText(expectedText)
   }
 
-  public async assertElementHasText(locator: Locator, expectedText: string, message?: string): Promise<void> {
+  public async assertElementHasText(
+    locator: Locator,
+    expectedText: string,
+    message?: string
+  ): Promise<void> {
     await expect(locator, message).toHaveText(expectedText)
   }
 
-  public async assertElementHasValue(locator: Locator, expectedValue: string, message?: string): Promise<void> {
+  public async assertElementHasValue(
+    locator: Locator,
+    expectedValue: string,
+    message?: string
+  ): Promise<void> {
     await expect(locator, message).toHaveValue(expectedValue)
   }
 
@@ -114,9 +134,10 @@ export abstract class BasePage {
    * URL helpers
    */
   public async waitForUrlToContain(text: string, timeout?: number): Promise<void> {
-    await this.page.waitForURL((url) => url.toString().includes(text), {
-      timeout: timeout || environment.test.timeout
-    })
+    await this.page.waitForURL(
+      url => url.toString().includes(text),
+      { timeout: timeout || environment.test.timeout }
+    )
   }
 
   public async assertUrlContains(text: string, message?: string): Promise<void> {
@@ -141,7 +162,7 @@ export abstract class BasePage {
   }
 
   /**
-   * Útil para blur/validaciones en inputs
+   * Blur / validaciones
    */
   public async blur(locator: Locator): Promise<void> {
     await this.waitForElement(locator)
@@ -149,7 +170,7 @@ export abstract class BasePage {
   }
 
   /**
-   * Espera corta controlada (evitar en lo posible, pero a veces ayuda)
+   * Espera corta controlada
    */
   public async shortWait(ms = 300): Promise<void> {
     await this.page.waitForTimeout(ms)

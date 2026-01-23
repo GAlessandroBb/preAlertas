@@ -1,5 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test'
-import { BasePage } from '../base/BasePage'
+import { BasePage } from '../../base/BasePage'
 
 export class LoginPage extends BasePage {
   private readonly loginUrl = ''

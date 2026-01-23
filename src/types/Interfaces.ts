@@ -1,6 +1,6 @@
 export interface NewWrData {
   tracking: string
-  consignee: string
+  // consignee: string
   shipper: string
   carrier: string
   baterias: string

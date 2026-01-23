@@ -14,6 +14,7 @@ export interface EnvironmentConfig {
   // Application URLs
   baseUrl: string
   olvaMiami: string
+  olvaBox: string
 
   // Test configuration
   test: {
@@ -58,6 +59,7 @@ export const environment: EnvironmentConfig = {
 
   baseUrl: process.env.BASE_URL_CLIENTE_OLVABOX || 'http://localhost:3000',
   olvaMiami: process.env.BASE_URL_OLVAMIAMI || 'http://localhost:3000',
+  olvaBox: process.env.BASE_URL_OLVABOX || 'http://localhost:3000',
 
   test: {
     headless: parseBoolean(process.env.HEADLESS, false),
