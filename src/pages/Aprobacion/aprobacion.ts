@@ -44,21 +44,20 @@ export class olvaBoxShVerification extends BasePage {
 
 
   async aprobarUltimoSh(): Promise<void> {
-    // ordenar por SH
     await this.headersSh.click()
     await this.headersSh.click()
 
-    // esperar primera fila visible
+
     const firstRow = this.page.locator('#sample-table-2 tbody tr').first()
     await expect(firstRow).toBeVisible()
 
-    // click aprobar
+
     await this.btnCheckbox.click()
 
-    // esperar modal
+
     await expect(this.inputNota).toBeVisible()
 
-    // completar modal
+
     await this.inputNota.fill('Aprobado por automatización')
     await this.aprobar.selectOption('1')
     await this.actualizar.click()
