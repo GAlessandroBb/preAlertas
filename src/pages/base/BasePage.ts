@@ -21,14 +21,26 @@ export abstract class BasePage {
    * Navega a una ruta relativa o URL absoluta
    */
   public async navigateTo(url: string, base: BaseRoot = 'default'): Promise<void> {
-    const root = this.roots[base]
-    const fullUrl = url.startsWith('http') ? url : `${root}${url}`
+      const root = this.roots[base]
 
-    await this.page.goto(fullUrl, {
-      waitUntil: 'domcontentloaded',
-      timeout: environment.test.timeout
-    })
-  }
+      const normalizedRoot = root.endsWith('/')
+        ? root.slice(0, -1)
+        : root
+
+      const normalizedUrl = url.startsWith('/')
+        ? url
+        : `/${url}`
+
+      const fullUrl = url.startsWith('http')
+        ? url
+        : `${normalizedRoot}${normalizedUrl}`
+
+      await this.page.goto(fullUrl, {
+        waitUntil: 'domcontentloaded',
+        timeout: environment.test.timeout
+      })
+    }
+
 
   /**
    * Espera genérica para apps SPA

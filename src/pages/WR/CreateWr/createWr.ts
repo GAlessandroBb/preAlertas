@@ -107,7 +107,13 @@ export class CreateWr extends BasePage {
     await this.addBtn.click()
     await this.crearBtn.click()
   }
+  
+  async closePage(): Promise<void> {
+    await this.page.waitForTimeout(5000)
+    await this.page.close()
+  }
 
+  
   // async selectConsignee(name: string) {
   //     await this.consignee.fill(name)
   //     await this.page.click('#btnSearchConsignee')
@@ -132,7 +138,4 @@ export class CreateWr extends BasePage {
   //     await expect(modal).toBeHidden()
   // }
 
-  async closePage(): Promise<void> {
-    await this.page.close()
-  }
 }

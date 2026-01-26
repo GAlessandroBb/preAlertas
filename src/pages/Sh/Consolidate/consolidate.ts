@@ -15,23 +15,26 @@ export class Consolidate extends BasePage {
   constructor(page: Page) {
     super(page)
 
-    this.destinatarioList = page.locator('.destinatario_id')
-    this.optionEntrega = page.locator('.dest_entrega')
-    this.optionReembalaje = page.locator('.reempaque')
-    this.optionSeguro = page.locator('.requiereSeguro')
-    this.btnSolicitarEnvio = page.locator('.btnSolicitarEnvio')
+    this.destinatarioList = page.getByLabel('Selecciona un destinatario');
+    this.optionEntrega = page.locator('#dest_entrega');
+    this.optionReembalaje = page.locator('#reempaque')
+    this.optionSeguro = page.locator('#requiereSeguro')
+
+
+    this.btnSolicitarEnvio = page.getByRole('button', { name: 'Solicitar Envio' })
+
     this.verifyText = page.locator('div.alert.alert-success.mt-3')
     this.idSh = page.locator('h1.font-weight-bold')
   }
 
   async navigate(): Promise<void> {
-    await this.navigateTo(this.consolidate)
+    await this.navigateTo(this.consolidate, 'default')
     await this.page.waitForLoadState('domcontentloaded')
   }
 
   async selectOptions(): Promise<void> {
-    await this.destinatarioList.selectOption({ index: 1 })
-    await this.optionEntrega.selectOption({ index: 1 })
+    await this.destinatarioList.selectOption({ value: '45' })
+    await this.optionEntrega.selectOption({ value: '1' })
     await this.optionReembalaje.selectOption({ index: 1 })
     await this.optionSeguro.selectOption({ index: 2 })
   }

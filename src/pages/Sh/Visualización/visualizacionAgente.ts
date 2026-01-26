@@ -4,7 +4,6 @@ import { BasePage } from '../../base/BasePage'
 
 export class olvaBoxHomeVisualizacion extends BasePage {
   private readonly shipment: Locator
-  private readonly shipmentUrl = '/jc2_SS_Shipment.php'
   //login ml, bienvenida ml.
   constructor(page: Page) {
     super(page)
@@ -19,12 +18,7 @@ export class olvaBoxHomeVisualizacion extends BasePage {
     await this.shipment.click()
   }
 
-  async navigate(): Promise<void> {
-    await this.navigateTo(this.shipmentUrl)
-    await this.page.waitForLoadState('domcontentloaded')
+  async closePageVi(): Promise<void> {
+    await this.page.close()
   }
-
-  // async validateSh(): Promise<void> {
-
-  // }
 }

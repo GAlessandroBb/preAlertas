@@ -5,35 +5,44 @@ import { BasePage } from '../base/BasePage'
 export class olvaBoxShVerification extends BasePage {
   private readonly aprobarUrl = '/jc2_sh_porAprobar2018.php'
 
-  private readonly inputBuscar: Locator
   private readonly btnCheckbox: Locator
   private readonly inputNota: Locator
   private readonly aprobar: Locator
   private readonly actualizar: Locator
+  
+  private readonly inputBuscar: Locator
 
   constructor(page: Page) {
     super(page)
+    this.inputBuscar = page.locator('#sample-table-2_filter input')
 
-    this.inputBuscar = page.locator('input[aria-controls="sample-table-2"]')
-    this.btnCheckbox = page.locator('.icon-check')
-    this.inputNota = page.locator('#nota')
+
+    this.btnCheckbox = page.locator('tr', { hasText: 'Miami' }).locator('button.btnAprobar')
+    this.inputNota = page.getByRole('textbox', { name: 'Nota' })
     this.aprobar = page.locator('#aprobado')
     this.actualizar = page.locator('#btnAct')
   }
 
-  async navigate(): Promise<void> {
-    await this.navigateTo(this.aprobarUrl, 'olvabox')
-    await this.waitForLoaded()
-  }
 
   async waitForLoaded(): Promise<void> {
-    await this.page.waitForLoadState('domcontentloaded')
+    await expect(this.inputBuscar).toBeVisible({ timeout: 10000 })
   }
 
-  //buscar sh
-  async buscarSh(idSh: string): Promise<void> {
-    await this.inputBuscar.fill(idSh)
-  }
+
+  async aprobarUltimoSh(): Promise<void> {
+    const thSH = this.page.getByRole('columnheader', { name: 'SH' })
+    await thSH.click()
+
+    const thSh2 = this.page.locator('.sorting_desc')
+    await thSh2.click()
+
+    const primeraFila = this.page.locator('#sample-table-2 tbody tr').first()
+
+    const btnAprobar = primeraFila.locator('button.btnAprobar')
+
+    await btnAprobar.click()
+}
+
 
   //click checkbox
   async checkbox(): Promise<void> {

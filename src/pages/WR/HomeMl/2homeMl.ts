@@ -9,10 +9,10 @@ export class olvaBoxHomeWr extends BasePage {
     this.addWrOption = page.locator('ul.submenu li a:text("Add WR")')
   }
 
-  // async navigate(): Promise<void> {
-  // await this.navigateTo('/jc_home.php', 'olvamiami')
-  // await this.waitForLoaded()
-  // }
+  async navigate(): Promise<void> {
+  await this.navigateTo('/jc_home.php', 'olvamiami')
+  await this.waitForLoaded()
+  }
 
   async waitForLoaded(): Promise<void> {
     await this.page.waitForLoadState('domcontentloaded')
