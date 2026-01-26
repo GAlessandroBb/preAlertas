@@ -165,10 +165,11 @@ test('Flujo completo PreAlerta, WR y SH', async ({ page, context }) => {
     
 
     const ShVerification = new olvaBoxShVerification(page)
+    await ShVerification.navigate()
     // await ShVerification.waitForLoaded()
     await ShVerification.aprobarUltimoSh()
-    // await ShVerification.checkbox()
-    await ShVerification.aprobarYActualizar()
+    // // await ShVerification.checkbox()
+    // await ShVerification.aprobarYActualizar()
 
 
 

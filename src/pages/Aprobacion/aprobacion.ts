@@ -11,10 +11,21 @@ export class olvaBoxShVerification extends BasePage {
   private readonly actualizar: Locator
   
   private readonly inputBuscar: Locator
+  private readonly table: Locator
+  private readonly headerRow: Locator
+  private readonly headers: Locator
+  private readonly headersSh: Locator
 
   constructor(page: Page) {
     super(page)
     this.inputBuscar = page.locator('#sample-table-2_filter input')
+
+
+    //scrapping para table td
+    this.table = page.locator('#sample-table-2');
+    this.headerRow = this.table.locator('thead tr');
+    this.headers = this.headerRow.locator('th');
+    this.headersSh = this.headers.nth(2);
 
 
     this.btnCheckbox = page.locator('tr', { hasText: 'Miami' }).locator('button.btnAprobar')
@@ -23,35 +34,32 @@ export class olvaBoxShVerification extends BasePage {
     this.actualizar = page.locator('#btnAct')
   }
 
-
-  async waitForLoaded(): Promise<void> {
-    await expect(this.inputBuscar).toBeVisible({ timeout: 10000 })
+  async navigate(): Promise<void> {
+    await this.navigateTo(this.aprobarUrl, 'olvabox')
   }
+
+  // async waitForLoaded(): Promise<void> {
+  //   await expect(this.page).
+  // }
 
 
   async aprobarUltimoSh(): Promise<void> {
-    const thSH = this.page.getByRole('columnheader', { name: 'SH' })
-    await thSH.click()
+    // ordenar por SH
+    await this.headersSh.click()
+    await this.headersSh.click()
 
-    const thSh2 = this.page.locator('.sorting_desc')
-    await thSh2.click()
+    // esperar primera fila visible
+    const firstRow = this.page.locator('#sample-table-2 tbody tr').first()
+    await expect(firstRow).toBeVisible()
 
-    const primeraFila = this.page.locator('#sample-table-2 tbody tr').first()
-
-    const btnAprobar = primeraFila.locator('button.btnAprobar')
-
-    await btnAprobar.click()
-}
-
-
-  //click checkbox
-  async checkbox(): Promise<void> {
+    // click aprobar
     await this.btnCheckbox.click()
-  }
 
-  //aprobar y actualizar
-  async aprobarYActualizar(): Promise<void> {
-    await this.inputNota.fill('Aprobado por automatizacion')
+    // esperar modal
+    await expect(this.inputNota).toBeVisible()
+
+    // completar modal
+    await this.inputNota.fill('Aprobado por automatización')
     await this.aprobar.selectOption('1')
     await this.actualizar.click()
   }
