@@ -42,12 +42,18 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
     viewport: { width: 1280, height: 720 },
     userAgent: 'Playwright-ShippingPlatform-Automation',
-    // permissions: ['camera'],
+    locale: 'es-ES',
+    timezoneId: 'America/Lima',
     permissions: ['camera'],
     launchOptions: {
       args: [
         '--use-fake-ui-for-media-stream', // Evita popups extra de UI
-        '--use-fake-device-for-media-stream' // Inyecta un video de prueba (círculo verde dando vueltas)
+        '--use-fake-device-for-media-stream', // Inyecta un video de prueba (círculo verde dando vueltas)
+        // 2. Desactivar la función de traducción por completo
+        '--lang=es-ES',
+        '--disable-features=Translate',
+        '--disable-infobars'
+        // 3. Evitar que salten popups de "idioma detectado"
       ]
     },
 
